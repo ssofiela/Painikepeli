@@ -122,7 +122,6 @@ export default function Register(props) {
                                 props.firebase
                                     .doCreateUserWithEmailAndPassword(email, password)
                                     .then( () => {
-                                        console.log("peops", props)
                                         props.firebase.users().doc(props.firebase.getCurrentUser().uid).set({
                                             score: 20
                                         });
