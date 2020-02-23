@@ -5,14 +5,16 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
+
 const useStyles = makeStyles(theme => ({
     paper: {
         padding: theme.spacing(2),
         margin: 'auto',
-        maxWidth: 500,
+        maxWidth: 600,
+        height: 500
+
     },
     root: {
-        flexGrow: 1,
     },
 }));
 
@@ -42,8 +44,12 @@ const HomePage = props => {
         calculatePoints();
     }, []);
 
+    // Parameter: global counter
+    // Function does:
+    //  1. decrease 1 point
+    //  2. Check if get a win. If win -> increase user points
+    //  3. How many steps to the next win
     const newScore = (points) => {
-        props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(-1))
         let win = 0;
         if (points % 500 === 0 || points % 100 === 0 || points % 10 === 0) {
             const fiveHundred = points % 500 < 10 && points % 500 > 0;
@@ -77,7 +83,8 @@ const HomePage = props => {
     };
 
     return (
-        <div className={classes.root}>
+        <div>
+        <div className={classes.root} >
             <Paper className={classes.paper} >
                 <Grid container justify="center"
                       alignItems="center">
@@ -91,13 +98,16 @@ const HomePage = props => {
                                     <div style={{flexDirection: 'column', display: 'flex'}}>
                                         <h1>Painkikepeli</h1>
                                         <div style={{flexDirection: 'row'}}>
-                                            <text>Pisteeni: </text>
-                                            <text>{ownPoints}</text>
+                                            <div>Pisteeni: </div>
+                                            <div>{ownPoints}</div>
                                         </div>
                                     </div>
-                                    <Button variant="outlined" size="large" color="primary" disabled={ownPoints <= 0 || disableButton}
+                                    <Button variant="outlined" color="primary" style={{height: '250px', width: '250px'}} disabled={ownPoints <= 0 || disableButton}
                                             onClick={async () => {
-                                                setDisabledButton(true)
+                                                setDisabledButton(true);
+                                                props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(-1))
+                                                setPoints(ownPoints - 1)
+                                                // Update global counter and get the count
                                                 await props.firebase.clickCounter().doc("globalCounter").update("counter", props.firebase.firestore.FieldValue.increment(1))
                                                 let points = await props.firebase
                                                     .clickCounter()
@@ -112,8 +122,13 @@ const HomePage = props => {
                                                     newScore(points[0].data.counter)
                                                 }
                                             }}>
-                                        Painike
+                                        {disableButton ?
+                                            <CircularProgress/>
+                                        :
+                                            <div>Painike</div>
+                                        }
                                     </Button>
+                                    {/* Give a possibility to start again (get 20 points) */}
                                     {ownPoints === 0 &&
                                     <Button variant="outlined" size="large" color="primary" onClick={() => {
                                         props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(20))
@@ -129,6 +144,7 @@ const HomePage = props => {
                     </Grid>
                 </Grid>
             </Paper>
+        </div>
         </div>
 
     );
