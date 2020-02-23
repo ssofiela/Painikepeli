@@ -1,6 +1,7 @@
 import React from 'react';
 import {withFirebase} from "./Firebase";
-import appRouter from './AppRouter'
+import AppRouter from './AppRouter'
+require('firebase/auth')
 
 class App extends React.Component {
     render() {
@@ -9,6 +10,6 @@ class App extends React.Component {
         );
     }
 }
-const AppWithRouter = withFirebase(appRouter);
+const AppWithRouter = withFirebase(AppRouter);
 
 export default App;

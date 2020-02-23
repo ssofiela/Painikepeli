@@ -46,9 +46,9 @@ const HomePage = props => {
         props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(-1))
         let win = 0;
         if (points % 500 === 0 || points % 100 === 0 || points % 10 === 0) {
-            const fiveHundred = points % 500 < 10;
-            const oneHundred = points % 100 < 10;
-            let nextWin = 0
+            const fiveHundred = points % 500 < 10 && points % 500 > 0;
+            const oneHundred = points % 100 < 10 && points % 100 > 0;
+            let nextWin = 0;
             if (fiveHundred || oneHundred) {
                 if (points % 500 < points % 100) {
                     nextWin = points % 500
@@ -112,7 +112,7 @@ const HomePage = props => {
                                                     newScore(points[0].data.counter)
                                                 }
                                             }}>
-                                        Click
+                                        Painike
                                     </Button>
                                     {ownPoints === 0 &&
                                     <Button variant="outlined" size="large" color="primary" onClick={() => {
