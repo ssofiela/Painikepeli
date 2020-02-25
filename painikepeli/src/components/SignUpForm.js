@@ -18,11 +18,12 @@ const useStyles = makeStyles(theme => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: '#f1fcff'
     },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
+        color: '#f1fcff',
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -86,6 +87,7 @@ export default function Register(props) {
                     <TextField
                         variant='outlined'
                         margin='normal'
+                        primary
                         required
                         fullWidth
                         id='email'
@@ -98,6 +100,7 @@ export default function Register(props) {
                     />
                     <TextField
                         variant='outlined'
+                        primary
                         margin='normal'
                         required
                         fullWidth
@@ -113,7 +116,7 @@ export default function Register(props) {
                     <Button
                         fullWidth
                         variant='contained'
-                        color='primary'
+                        style={{backgroundColor:'#e1f8fd'}}
                         className={classes.submit}
                         onClick={ async () => {
                             checkEmail();

@@ -16,7 +16,7 @@ export default function ButtonAppBar(props) {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" style={{backgroundColor: '#f1fcff'}}>
+            <AppBar position="static" style={{backgroundColor: '#e1f8fd'}}>
                 <Toolbar>
                     <Grid item xs={2}>
                         <Button onClick={() => {
@@ -24,7 +24,7 @@ export default function ButtonAppBar(props) {
                                 props.history.push('/login')
                             });}
                         }>
-                            Log out
+                            Kirjaudu ulos
                         </Button>
                     </Grid>
                 </Toolbar>

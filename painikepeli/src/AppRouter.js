@@ -55,10 +55,9 @@ export default function AppRouter(props) {
         if(!userAuth) {
            value.push(
                 <Switch>
-                    <Route key='home' exact path='/' component={Login}/>
                     <Route key='login' exact path='/login' component={Login}/>
                     <Route key='register' exact path='/register' component={Register}/>
-                    <Redirect to="/" />
+                    <Redirect to="/login" />
                 </Switch>
                )
         } else {

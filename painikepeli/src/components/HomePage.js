@@ -25,25 +25,32 @@ const HomePage = props => {
     const [disableButton, setDisabledButton] = useState(false);
     const [stepsToWin, setStepsToWin] = useState(10);
     const [win, setWin] = useState(0);
+    const [mobile, setMobile] = useState(false)
 
     useEffect(() => {
-        setIndicator(true)
-        const calculatePoints = async () => {
-            let points = await props.firebase
-                .users()
-                .get()
-                .then(querySnapshot => {
-                    return querySnapshot.docs.map(item => {return {id:item.id, data: item.data()}})
-                });
-            const ownId = props.firebase.getCurrentUser().uid;
-            for (let i = 0; i < points.length; i++){
-                if (points[i].id === ownId) {
-                    setIndicator(false);
-                    setPoints(points[i].data.score)
-                }
+        props.firebase.auth.onAuthStateChanged(function(user) {
+            if(user) {
+                setIndicator(true);
+                const calculatePoints = async () => {
+                    let points = await props.firebase
+                        .users()
+                        .get()
+                        .then(querySnapshot => {
+                            return querySnapshot.docs.map(item => {return {id:item.id, data: item.data()}})
+                        });
+                    const ownId = props.firebase.getCurrentUser().uid;
+                    for (let i = 0; i < points.length; i++){
+                        if (points[i].id === ownId) {
+                            setIndicator(false);
+                            setPoints(points[i].data.score)
+                        }
+                    }
+                };
+                calculatePoints();
+                setMobile(window.innerWidth <= 500);
             }
-        };
-        calculatePoints();
+        })
+
     }, []);
 
     // Parameter: global counter
@@ -76,6 +83,7 @@ const HomePage = props => {
 
 
     };
+
 
     return (
         <div>

@@ -55,6 +55,7 @@ export default function Register(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
+                        primary
                         required
                         fullWidth
                         id="email"
@@ -68,6 +69,7 @@ export default function Register(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
+                        primary
                         required
                         fullWidth
                         name="password"
@@ -82,7 +84,7 @@ export default function Register(props) {
                     <Button
                         fullWidth
                         variant="contained"
-                        color="primary"
+                        style={{backgroundColor:'#e1f8fd'}} //#f1fcff
                         className={classes.submit}
                         onClick={ () => {
                             setError(false);
