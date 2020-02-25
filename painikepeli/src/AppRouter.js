@@ -65,8 +65,6 @@ export default function AppRouter(props) {
             value.push(
                 <Switch>
                     <Route key='home' exact path='/' component={HomePageNav}/>
-                    <Route key='register' exact path='/register' component={Register}/>
-                    <Route key='login' exact path='/login' component={Login}/>
                     <Redirect to="/" />
                 </Switch>
             )

@@ -16,7 +16,7 @@ export default function ButtonAppBar(props) {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" style={{backgroundColor: '#f1fcff'}}>
                 <Toolbar>
                     <Grid item xs={2}>
                         <Button onClick={() => {

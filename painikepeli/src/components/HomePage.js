@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         margin: 'auto',
         maxWidth: 600,
-        height: 500
+        height: 450
 
     },
     root: {
@@ -81,6 +81,9 @@ const HomePage = props => {
         <div>
         <div className={classes.root} >
             <Paper className={classes.paper} style={{backgroundColor: '#f1fcff', borderRadius: '1%'}}>
+                {!indicator &&
+                <h3>Saldo: {ownPoints} €</h3>
+                }
                 <Grid container justify="center"
                       alignItems="center">
                     <Grid item justify="center"
@@ -90,10 +93,6 @@ const HomePage = props => {
                             :
                             (
                                 <div>
-                                    <div style={{flexDirection: 'column', display: 'flex'}}>
-                                        <h1 style={{alignItems: 'center'}}>Arpa</h1>
-                                            <div>{ownPoints} €</div>
-                                    </div>
                                     {ownPoints === 0 && !disableButton ?
                                         (
                                             <Button variant="outlined" color="red"
@@ -131,7 +130,7 @@ const HomePage = props => {
                                                 {disableButton ?
                                                     <CircularProgress/>
                                                     :
-                                                    <h4 style={{color: 'green'}}>Osta arpa</h4>
+                                                    <h4 style={{color: 'green'}}>Osta arpa (1€)</h4>
                                                 }
                                             </Button>
                                         )
@@ -143,11 +142,12 @@ const HomePage = props => {
                         }
                     </Grid>
                 </Grid>
-                {!indicator &&
+                {!indicator && !disableButton ?
                 <div>
                     <h5 style={{textAlign: 'left', position: 'absolute', fontFamily: 'Robato'}}>Seuraava voitto: {stepsToWin} päästä</h5>
-                    <h4 style={{fontWeight: 'bold'}}>{win > 0 ? `Voitit ${win} pistettä` : 'Ei voittoa'}</h4>
+                    <h4 style={{fontWeight: 'bold'}}>{win > 0 ? `Voitit ${win} €` : 'Ei voittoa'}</h4>
                 </div>
+                    : null
                 }
 
             </Paper>
