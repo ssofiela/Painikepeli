@@ -23,6 +23,8 @@ const HomePage = props => {
     const [ownPoints, setPoints] = useState(0);
     const [indicator, setIndicator] = useState(false);
     const [disableButton, setDisabledButton] = useState(false);
+    const [stepsToWin, setStepsToWin] = useState(10);
+    const [win, setWin] = useState(0);
 
     useEffect(() => {
         setIndicator(true)
@@ -46,46 +48,39 @@ const HomePage = props => {
 
     // Parameter: global counter
     // Function does:
-    //  1. decrease 1 point
-    //  2. Check if get a win. If win -> increase user points
-    //  3. How many steps to the next win
+    //  1. Check if get a win. If win -> increase user points and alert
+    //  2. How many steps to the next win
     const newScore = (points) => {
-        let win = 0;
-        if (points % 500 === 0 || points % 100 === 0 || points % 10 === 0) {
-            const fiveHundred = points % 500 < 10 && points % 500 > 0;
-            const oneHundred = points % 100 < 10 && points % 100 > 0;
-            let nextWin = 0;
-            if (fiveHundred || oneHundred) {
-                if (points % 500 < points % 100) {
-                    nextWin = points % 500
-                } else {
-                    nextWin = points % 100
-                }
-            } else {
-                nextWin = 10
-            }
-            if (points % 500 === 0) {
-                alert(`Voitit 250 pistettä\n Uusi voitto ${nextWin} painalluksen päästä`);
-                win = 250
-            } else if (points % 100 === 0) {
-                alert(`Voitit 40 pistettä\n Uusi voitto ${nextWin} painalluksen päästä`);
-                win = 40
-            } else if (points % 10 === 0) {
-                alert(`Voitit 5 pistettä\n Uusi voitto ${nextWin} painalluksen päästä`);
-                win = 5
-            }
-            props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(win))
 
+        // Check wins
+        let win = 0;
+        if (points % 500 === 0) {
+            win = 250
+        } else if (points % 100 === 0) {
+            win = 40
+        } else if (points % 10 === 0) {
+            win = 5
         }
+        if (win > 0) {
+            props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(win))
+        }
+
+        setWin(win);
+
         setDisabledButton(false);
         setPoints(ownPoints + win -1);
+
+        // Check how many step(s) to the next win
+        setStepsToWin(10 - (points % 10));
+
+
 
     };
 
     return (
         <div>
         <div className={classes.root} >
-            <Paper className={classes.paper} >
+            <Paper className={classes.paper} style={{backgroundColor: '#f1fcff', borderRadius: '1%'}}>
                 <Grid container justify="center"
                       alignItems="center">
                     <Grid item justify="center"
@@ -96,53 +91,65 @@ const HomePage = props => {
                             (
                                 <div>
                                     <div style={{flexDirection: 'column', display: 'flex'}}>
-                                        <h1>Painkikepeli</h1>
-                                        <div style={{flexDirection: 'row'}}>
-                                            <div>Pisteeni: </div>
-                                            <div>{ownPoints}</div>
-                                        </div>
+                                        <h1 style={{alignItems: 'center'}}>Arpa</h1>
+                                            <div>{ownPoints} €</div>
                                     </div>
-                                    <Button variant="outlined" color="primary" style={{height: '250px', width: '250px'}} disabled={ownPoints <= 0 || disableButton}
-                                            onClick={async () => {
-                                                setDisabledButton(true);
-                                                props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(-1))
-                                                setPoints(ownPoints - 1)
-                                                // Update global counter and get the count
-                                                await props.firebase.clickCounter().doc("globalCounter").update("counter", props.firebase.firestore.FieldValue.increment(1))
-                                                let points = await props.firebase
-                                                    .clickCounter()
-                                                    .get()
-                                                    .then(querySnapshot => {
-                                                        return querySnapshot.docs.map(item => {
-                                                            return {id: item.id, data: item.data()}
-                                                        })
-                                                    });
+                                    {ownPoints === 0 && !disableButton ?
+                                        (
+                                            <Button variant="outlined" color="red"
+                                                    style={{height: '250px', width: '250px', borderRadius: "50%"}} onClick={() => {
+                                                props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(20))
+                                                setPoints(20)
+                                            }
+                                            }>
+                                                <h4 style={{color: 'red'}}>Aloita alusta</h4>
+                                            </Button>
+                                        )
+                                            :
+                                        (
+                                            <Button variant="outlined" color="green" disabled={disableButton}
+                                                    style={{height: '250px', width: '250px', borderRadius: "50%"}}
+                                                    onClick={async () => {
+                                                        setDisabledButton(true);
+                                                        props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(-1))
+                                                        setPoints(ownPoints - 1)
+                                                        // Update global counter and get the count
+                                                        await props.firebase.clickCounter().doc("globalCounter").update("counter", props.firebase.firestore.FieldValue.increment(1))
+                                                        let points = await props.firebase
+                                                            .clickCounter()
+                                                            .get()
+                                                            .then(querySnapshot => {
+                                                                return querySnapshot.docs.map(item => {
+                                                                    return {id: item.id, data: item.data()}
+                                                                })
+                                                            });
 
-                                                {
-                                                    newScore(points[0].data.counter)
+                                                        {
+                                                            newScore(points[0].data.counter)
+                                                        }
+                                                    }}>
+                                                {disableButton ?
+                                                    <CircularProgress/>
+                                                    :
+                                                    <h4 style={{color: 'green'}}>Osta arpa</h4>
                                                 }
-                                            }}>
-                                        {disableButton ?
-                                            <CircularProgress/>
-                                        :
-                                            <div>Painike</div>
-                                        }
-                                    </Button>
-                                    {/* Give a possibility to start again (get 20 points) */}
-                                    {ownPoints === 0 &&
-                                    <Button variant="outlined" size="large" color="primary" onClick={() => {
-                                        props.firebase.users().doc(props.firebase.getCurrentUser().uid).update("score", props.firebase.firestore.FieldValue.increment(20))
-                                        setPoints(20)
+                                            </Button>
+                                        )
+
                                     }
-                                    }>
-                                        Aloita alusta
-                                    </Button>
-                                    }
+
                                 </div>
                             )
                         }
                     </Grid>
                 </Grid>
+                {!indicator &&
+                <div>
+                    <h5 style={{textAlign: 'left', position: 'absolute', fontFamily: 'Robato'}}>Seuraava voitto: {stepsToWin} päästä</h5>
+                    <h4 style={{fontWeight: 'bold'}}>{win > 0 ? `Voitit ${win} pistettä` : 'Ei voittoa'}</h4>
+                </div>
+                }
+
             </Paper>
         </div>
         </div>
