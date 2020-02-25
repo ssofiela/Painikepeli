@@ -9,11 +9,11 @@ import {
 import {withFirebase} from './Firebase';
 import Home from './pages/home'
 import ButtonAppBar from './components/TopBar'
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import {makeStyles} from "@material-ui/core/styles";
+import Grid from '@material-ui/core/Grid';
+import {makeStyles} from '@material-ui/core/styles';
+import {theme} from './components/utils/theme'
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -36,7 +36,7 @@ export default function AppRouter(props) {
     // Check authentication
     useEffect(() => {
         setIndicator(true);
-        props.firebase.auth.onAuthStateChanged(function(user) {
+        props.firebase.auth.onAuthStateChanged(function (user) {
             if (user) {
                 // User is signed in.
                 setIndicator(false);
@@ -52,19 +52,19 @@ export default function AppRouter(props) {
     // If user is not authenticated, she/he can only log in/register
     const authCheck = () => {
         let value = [];
-        if(!userAuth) {
-           value.push(
+        if (!userAuth) {
+            value.push(
                 <Switch>
                     <Route key='login' exact path='/login' component={Login}/>
                     <Route key='register' exact path='/register' component={Register}/>
-                    <Redirect to="/login" />
+                    <Redirect to='/login'/>
                 </Switch>
-               )
+            )
         } else {
             value.push(
                 <Switch>
                     <Route key='home' exact path='/' component={HomePageNav}/>
-                    <Redirect to="/" />
+                    <Redirect to='/'/>
                 </Switch>
             )
         }
@@ -74,16 +74,16 @@ export default function AppRouter(props) {
     return (
 
         <Router>
-            <TopBarWithRouter />
+            <TopBarWithRouter/>
             {indicator ?
                 <div className={classes.root}>
-                        <Grid container justify="center"
-                              alignItems="center">
-                            <Grid item justify="center"
-                                  alignItems="center">
-                                    <CircularProgress/>
-                            </Grid>
+                    <Grid container justify='center'
+                          alignItems='center'>
+                        <Grid item justify='center'
+                              alignItems='center'>
+                            <CircularProgress color={theme.palette.secondary.main}/>
                         </Grid>
+                    </Grid>
                 </div>
                 :
                 authCheck()

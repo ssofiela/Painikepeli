@@ -2,8 +2,8 @@ import React from 'react';
 import {withFirebase} from "./Firebase";
 import AppRouter from './AppRouter'
 import {theme} from './components/utils/theme'
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-require('firebase/auth')
+import { ThemeProvider } from '@material-ui/core/styles';
+require('firebase/auth');
 
 
 class App extends React.Component {

@@ -3,9 +3,10 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import {theme} from './utils/theme'
 
 
 const useStyles = makeStyles(theme => ({
@@ -15,12 +16,8 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -46,7 +43,7 @@ export default function Register(props) {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
+            <CssBaseline/>
             <div className={classes.paper}>
                 <Typography component="h1" variant="h4">
                     Kirjaudu
@@ -55,7 +52,6 @@ export default function Register(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        primary
                         required
                         fullWidth
                         id="email"
@@ -69,7 +65,6 @@ export default function Register(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        primary
                         required
                         fullWidth
                         name="password"
@@ -84,9 +79,9 @@ export default function Register(props) {
                     <Button
                         fullWidth
                         variant="contained"
-                        style={{backgroundColor:'#e1f8fd'}} //#f1fcff
+                        style={{backgroundColor: theme.palette.secondary.main}} //#f1fcff
                         className={classes.submit}
-                        onClick={ () => {
+                        onClick={() => {
                             setError(false);
                             props.firebase
                                 .doSignInWithEmailAndPassword(email, password)
@@ -101,7 +96,7 @@ export default function Register(props) {
                                 })
                         }}
                     >
-                        Kirjaudu
+                        <div style={{color: theme.palette.primary.light}}>Kirjaudu</div>
                     </Button>
                     <Link to="/register">{"Uusi käyttäjä? Luo tili"}</Link>
                 </form>
