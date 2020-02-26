@@ -1,5 +1,5 @@
-import Register from '../src/pages/register.js';
-import Login from '../src/pages/login.js';
+import Register from './utils/register.js';
+import Login from './utils/login.js';
 import {
     Switch,
     Route,
@@ -7,13 +7,12 @@ import {
     withRouter, BrowserRouter as Router
 } from 'react-router-dom';
 import {withFirebase} from './Firebase';
-import Home from './pages/home'
+import Home from './utils/home'
 import ButtonAppBar from './components/TopBar'
 import React, {useState, useEffect} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
-import {theme} from './components/utils/theme'
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -37,15 +36,8 @@ export default function AppRouter(props) {
     useEffect(() => {
         setIndicator(true);
         props.firebase.auth.onAuthStateChanged(function (user) {
-            if (user) {
-                // User is signed in.
-                setIndicator(false);
-                setAuth(true);
-            } else {
-                // No user is signed in.
-                setIndicator(false);
-                setAuth(false);
-            }
+            setIndicator(false);
+            setAuth(user);
         });
     }, []);
 

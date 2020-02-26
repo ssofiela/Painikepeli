@@ -1,6 +1,6 @@
 import React from 'react';
 import {withFirebase} from "../Firebase";
-import HomePage from "../components/HomePage"
+import HomePage from "../pages/HomePage"
 import {withRouter} from 'react-router-dom'
 
 

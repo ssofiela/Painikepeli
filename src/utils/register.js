@@ -1,6 +1,6 @@
 import React from 'react';
 import {withFirebase} from "../Firebase";
-import SignUpForm from "../components/SignUpForm.js"
+import SignUpForm from "../pages/SignUpForm.js"
 import {withRouter} from "react-router-dom"
 
 

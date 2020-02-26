@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {theme} from './utils/theme'
+import {theme} from '../utils/theme'
 
 export default function ButtonAppBar(props) {
     const [auth, setAuth] = useState(false);
@@ -31,7 +31,6 @@ export default function ButtonAppBar(props) {
                         </Button>
                     </Grid>
                 </Toolbar>
-
             </AppBar>
         </div>
     );

@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {makeStyles} from '@material-ui/core/styles';
-import {theme} from './utils/theme'
+import {theme} from '../utils/theme'
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,9 +13,6 @@ const useStyles = makeStyles(theme => ({
         margin: 'auto',
         maxWidth: 600,
         height: 450,
-        //backgroundColor: theme.palette.primary.basic,
-
-
     },
     mobilePaper: {
         padding: theme.spacing(2),
@@ -47,7 +44,6 @@ const useStyles = makeStyles(theme => ({
         fontFamily: 'Robato',
         fontSize: 24
     }
-
 }));
 
 /*
@@ -63,6 +59,7 @@ const HomePage = props => {
     const [win, setWin] = useState(0);
     const [mobile, setMobile] = useState(false);
 
+    // Calculate points (euros)
     useEffect(() => {
         props.firebase.auth.onAuthStateChanged(function (user) {
             if (user) {

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom'
-import {theme} from './utils/theme'
+import {theme} from '../utils/theme'
 
 
 const useStyles = makeStyles(theme => ({
@@ -29,8 +29,8 @@ const useStyles = makeStyles(theme => ({
 export default function Register(props) {
     const classes = useStyles();
 
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState(false)
 
     const handleEmail = (newEmail) => {
@@ -42,53 +42,53 @@ export default function Register(props) {
 
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component='main' maxWidth='xs'>
             <CssBaseline/>
             <div className={classes.paper}>
-                <Typography component="h1" variant="h4">
+                <Typography component='h1' variant='h4'>
                     Kirjaudu
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
-                        variant="outlined"
-                        margin="normal"
+                        variant='outlined'
+                        margin='normal'
                         required
                         fullWidth
-                        id="email"
-                        label="Sähköposti"
-                        name="email"
-                        autoComplete="email"
+                        id='email'
+                        label='Sähköposti'
+                        name='email'
+                        autoComplete='email'
                         autoFocus
                         onChange={(event) => handleEmail(event.target.value)}
                         error={error}
                     />
                     <TextField
-                        variant="outlined"
-                        margin="normal"
+                        variant='outlined'
+                        margin='normal'
                         required
                         fullWidth
-                        name="password"
-                        label="Salasana"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
+                        name='password'
+                        label='Salasana'
+                        type='password'
+                        id='password'
+                        autoComplete='current-password'
                         onChange={(event) => handlePassword(event.target.value)}
                         error={error}
-                        helperText={error ? "Sähköposti ja salasana eivät täsmää" : null}
+                        helperText={error ? 'Sähköposti ja salasana eivät täsmää' : null}
                     />
                     <Button
                         fullWidth
-                        variant="contained"
-                        style={{backgroundColor: theme.palette.secondary.main}} //#f1fcff
+                        variant='contained'
+                        style={{backgroundColor: theme.palette.secondary.main}}
                         className={classes.submit}
                         onClick={() => {
                             setError(false);
                             props.firebase
                                 .doSignInWithEmailAndPassword(email, password)
                                 .then(() => {
-                                    setEmail("");
-                                    setPassword("");
-                                    props.history.push("/")
+                                    setEmail('');
+                                    setPassword('');
+                                    props.history.push('/')
                                 })
                                 .catch((error) => {
                                     console.error(error);
@@ -98,7 +98,7 @@ export default function Register(props) {
                     >
                         <div style={{color: theme.palette.primary.light}}>Kirjaudu</div>
                     </Button>
-                    <Link to="/register">{"Uusi käyttäjä? Luo tili"}</Link>
+                    <Link to='/register'>Uusi käyttäjä? Luo tili</Link>
                 </form>
             </div>
         </Container>
