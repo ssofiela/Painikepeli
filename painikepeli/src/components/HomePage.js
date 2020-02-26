@@ -24,6 +24,29 @@ const useStyles = makeStyles(theme => ({
         height: window.innerHeight,
         backgroundColor: theme.palette.primary.basic
     },
+    pointsText: {
+        color: theme.palette.secondary.main,
+        display: "inline",
+        fontFamily: 'Robato',
+        fontSize: 16,
+        textTransform: 'uppercase'
+    },
+    pointsResult: {
+        color: theme.palette.secondary.main,
+        display: "inline",
+        fontFamily: 'Robato',
+        fontSize: 28,
+    },
+    gridStyle: {
+        justifyContent: 'flex-end',
+        display: 'inline-block',
+        width: '50%'
+    },
+    winText: {
+        textTransform: 'uppercase',
+        fontFamily: 'Robato',
+        fontSize: 24
+    }
 
 }));
 
@@ -105,40 +128,17 @@ const HomePage = props => {
             <Paper className={mobile ? classes.mobilePaper : classes.paper} elevation={20}>
                 {!indicator && win >= 0 ?
                     <div style={{flexDirection: 'row', marginBottom: 50, marginTop: 20}}>
-                        <Grid style={{justifyContent: 'flex-start', width: '50%', display: 'inline-block'}}>
-                            <div style={{
-                                color: theme.palette.secondary.main,
-                                fontSize: 16,
-                                display: "inline",
-                                fontFamily: 'Robato',
-                                textTransform: 'uppercase'
-                            }}>Saldo:
-                            </div>
-                            <div style={{
-                                color: theme.palette.secondary.main,
-                                fontSize: 28,
-                                display: "inline",
-                                fontFamily: 'Robato'
-                            }}>{ownPoints} €
-                            </div>
+                        <Grid className={classes.gridStyle}>
+                            <div className={classes.pointsText}>Saldo:</div>
+                            <div className={classes.pointsResult}>{ownPoints} €</div>
                         </Grid>
-                        <Grid style={{justifyContent: 'flex-end', display: 'inline-block', width: '50%'}}>
+                        <Grid className={classes.gridStyle}>
 
                             <div style={{textAlign: 'right', fontWeight: 'bold'}}>
                                 {win > 0 ?
-                                    <div style={{
-                                        color: '#1b5e20',
-                                        textTransform: 'uppercase',
-                                        fontFamily: 'Robato',
-                                        fontSize: 24
-                                    }}>Voitit {win} €</div>
+                                    <div className={classes.winText} style={{color: '#1b5e20'}}>Voitit {win} €</div>
                                     :
-                                    <div style={{
-                                        color: '#b71c1c',
-                                        textTransform: 'uppercase',
-                                        fontFamily: 'Robato',
-                                        fontSize: 24
-                                    }}>Ei voittoa</div>
+                                    <div className={classes.winText} style={{color: '#b71c1c'}}>Ei voittoa</div>
                                 }
                             </div>
                             <p style={{
@@ -162,7 +162,7 @@ const HomePage = props => {
                             color: theme.palette.secondary.main,
                             textAlign: 'center',
                             marginBottom: 10
-                        }}>Tervetuloa pelaamaan arpa peliä</h2>
+                        }}>Tervetuloa pelaamaan arpapeliä</h2>
                         <Grid style={{justifyContent: 'center', textAlign: 'center'}}>
                             <p style={{
                                 color: theme.palette.secondary.main,
