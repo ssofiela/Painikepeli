@@ -27,19 +27,23 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
+/*
+ Gaming view.
+ */
 const HomePage = props => {
     const classes = useStyles();
+
     const [ownPoints, setPoints] = useState(0);
     const [indicator, setIndicator] = useState(false);
     const [disableButton, setDisabledButton] = useState(false);
     const [stepsToWin, setStepsToWin] = useState(10);
     const [win, setWin] = useState(0);
-    const [mobile, setMobile] = useState(false)
+    const [mobile, setMobile] = useState(false);
 
     useEffect(() => {
         props.firebase.auth.onAuthStateChanged(function (user) {
             if (user) {
-                setWin(-1)
+                setWin(-1);
                 setIndicator(true);
                 const calculatePoints = async () => {
                     let points = await props.firebase
@@ -260,6 +264,6 @@ const HomePage = props => {
         </div>
 
     );
-}
+};
 
 export default HomePage;

@@ -33,6 +33,7 @@ export default function Register(props) {
     const [password, setPassword] = React.useState('');
     const [emailError, setEmailError] = React.useState(false);
     const [passwordError, setPasswordError] = React.useState(false);
+    const [errorText, setErrorText] = React.useState('');
 
 
     const handleEmail = (newEmail) => {
@@ -42,7 +43,10 @@ export default function Register(props) {
         setPassword(newPassword);
     };
 
-
+    /*
+    Check the email address
+    It adds error if it is not correct
+     */
     const checkEmail = () => {
         setEmailError(false);
         let re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -91,6 +95,7 @@ export default function Register(props) {
                         autoFocus
                         onChange={(event) => handleEmail(event.target.value)}
                         error={emailError}
+                        helperText={errorText !== '' ? errorText : null}
                     />
                     <TextField
                         variant='outlined'
@@ -112,6 +117,8 @@ export default function Register(props) {
                         style={{backgroundColor: theme.palette.secondary.main}}
                         className={classes.submit}
                         onClick={() => {
+                            setErrorText('');
+                            // Check that no errors
                             const emailCorrectness = checkEmail();
                             const passwordCorrectness = checkPassword();
                             if (!emailCorrectness && !passwordCorrectness) {
@@ -124,23 +131,29 @@ export default function Register(props) {
                                         setEmail('');
                                         setPassword('');
                                         props.history.push('/')
-                                    });
+                                    })
+                                    .catch((e) => {
+                                        // Add error message if email address is already in use
+                                        if (e.code === 'auth/email-already-in-use') {
+                                            setErrorText('Sähköpostiosoite on jo käytössä.')
+                                        }
+                                    })
                             }
 
                         }}
-                    >
-                        <div style={{color: theme.palette.primary.light}}>Rekisteröidy</div>
-                    </Button>
-                    <Grid container>
-                        <Grid item>
+                            >
+                            <div style={{color: theme.palette.primary.light}}>Rekisteröidy</div>
+                            </Button>
+                            <Grid container>
+                            <Grid item>
                             <Link to='/login'>
-                                Vanha käyttäjä? Kirjaudu sisään
+                            Vanha käyttäjä? Kirjaudu sisään
                             </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-        </Container>
-    );
-}
+                            </Grid>
+                            </Grid>
+                            </form>
+                            </div>
+                            </Container>
+                            );
+                            }
 
