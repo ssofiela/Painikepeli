@@ -185,10 +185,9 @@ const HomePage = props => {
                 }
                 <Grid container justify='center'
                       alignItems='center'>
-                    <Grid item justify='center'
-                          alignItems='center'>
+                    <Grid item>
                         {indicator ?
-                            <CircularProgress color={theme.palette.secondary.main}/>
+                            <CircularProgress color='secondary'/>
                             :
                             (
                                 <div>
@@ -239,7 +238,7 @@ const HomePage = props => {
                                                         }
                                                     }}>
                                                 {disableButton ?
-                                                    <CircularProgress color={theme.palette.secondary.main}/>
+                                                    <CircularProgress color='secondary'/>
                                                     :
                                                     <h4 style={{color: '#43a047', fontSize: 22}}>Osta arpa (1€)</h4>
                                                 }

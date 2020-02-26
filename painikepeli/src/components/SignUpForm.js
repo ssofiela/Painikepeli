@@ -89,7 +89,7 @@ export default function Register(props) {
                         required
                         fullWidth
                         id='email'
-                        label='sähköposti'
+                        label='Sähköposti'
                         name='email'
                         autoComplete='email'
                         autoFocus
@@ -141,19 +141,19 @@ export default function Register(props) {
                             }
 
                         }}
-                            >
-                            <div style={{color: theme.palette.primary.light}}>Rekisteröidy</div>
-                            </Button>
-                            <Grid container>
-                            <Grid item>
+                    >
+                        <div style={{color: theme.palette.primary.light}}>Rekisteröidy</div>
+                    </Button>
+                    <Grid container>
+                        <Grid item>
                             <Link to='/login'>
-                            Vanha käyttäjä? Kirjaudu sisään
+                                Vanha käyttäjä? Kirjaudu sisään
                             </Link>
-                            </Grid>
-                            </Grid>
-                            </form>
-                            </div>
-                            </Container>
-                            );
-                            }
+                        </Grid>
+                    </Grid>
+                </form>
+            </div>
+        </Container>
+    );
+}
 

@@ -54,7 +54,7 @@ export default function AppRouter(props) {
         let value = [];
         if (!userAuth) {
             value.push(
-                <Switch>
+                <Switch key='notAuth'>
                     <Route key='login' exact path='/login' component={Login}/>
                     <Route key='register' exact path='/register' component={Register}/>
                     <Redirect to='/login'/>
@@ -62,7 +62,7 @@ export default function AppRouter(props) {
             )
         } else {
             value.push(
-                <Switch>
+                <Switch key='auth'>
                     <Route key='home' exact path='/' component={HomePageNav}/>
                     <Redirect to='/'/>
                 </Switch>
@@ -79,9 +79,8 @@ export default function AppRouter(props) {
                 <div className={classes.root}>
                     <Grid container justify='center'
                           alignItems='center'>
-                        <Grid item justify='center'
-                              alignItems='center'>
-                            <CircularProgress color={theme.palette.secondary.main}/>
+                        <Grid item>
+                            <CircularProgress color='secondary'/>
                         </Grid>
                     </Grid>
                 </div>
