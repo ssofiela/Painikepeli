@@ -43,6 +43,19 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'uppercase',
         fontFamily: 'Robato',
         fontSize: 24
+    },
+    startingPointResult: {
+        color: theme.palette.secondary.main,
+        alignItems: 'center',
+        display: "inline",
+        fontFamily: 'Robato'
+    },
+    welcomeTextStyle: {
+        height: 68,
+        marginTop: 20,
+        marginBottom: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }));
 
@@ -123,37 +136,32 @@ const HomePage = props => {
     return (
         <div style={{backgroundColor: theme.palette.primary.basic, height: '100%'}}>
             <Paper className={mobile ? classes.mobilePaper : classes.paper} elevation={20}>
-                {!indicator && win >= 0 ?
-                    <div style={{flexDirection: 'row', marginBottom: 50, marginTop: 20}}>
-                        <Grid className={classes.gridStyle}>
-                            <div className={classes.pointsText}>Saldo:</div>
-                            <div className={classes.pointsResult}>{ownPoints} €</div>
-                        </Grid>
-                        <Grid className={classes.gridStyle}>
+                {!indicator && win >= 0 &&
+                <div style={{flexDirection: 'row', marginBottom: 50, marginTop: 20}}>
+                    <Grid className={classes.gridStyle}>
+                        <div className={classes.pointsText}>Saldo:</div>
+                        <div className={classes.pointsResult}>{ownPoints} €</div>
+                    </Grid>
+                    <Grid className={classes.gridStyle}>
 
-                            <div style={{textAlign: 'right', fontWeight: 'bold'}}>
-                                {win > 0 ?
-                                    <div className={classes.winText} style={{color: '#1b5e20'}}>Voitit {win} €</div>
-                                    :
-                                    <div className={classes.winText} style={{color: '#b71c1c'}}>Ei voittoa</div>
-                                }
-                            </div>
-                            <p style={{
-                                textAlign: 'right',
-                                fontFamily: 'Robato',
-                                color: theme.palette.secondary.main,
-                                marginTop: 4
-                            }}>Seuraava voitto {stepsToWin} päästä</p>
-                        </Grid>
-                    </div>
-                    :
-                    <div style={{
-                        height: 68,
-                        marginTop: 20,
-                        marginBottom: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
+                        <div style={{textAlign: 'right', fontWeight: 'bold'}}>
+                            {win > 0 ?
+                                <div className={classes.winText} style={{color: '#1b5e20'}}>Voitit {win} €</div>
+                                :
+                                <div className={classes.winText} style={{color: '#b71c1c'}}>Ei voittoa</div>
+                            }
+                        </div>
+                        <p style={{
+                            textAlign: 'right',
+                            fontFamily: 'Robato',
+                            color: theme.palette.secondary.main,
+                            marginTop: 4
+                        }}>Seuraava voitto {stepsToWin} päästä</p>
+                    </Grid>
+                </div>
+                }
+                { !indicator && win < 0 &&
+                    <div className={classes.welcomeTextStyle}>
                         <h2 style={{
                             fontFamily: 'Robato',
                             color: theme.palette.secondary.main,
@@ -161,21 +169,8 @@ const HomePage = props => {
                             marginBottom: 10
                         }}>Tervetuloa pelaamaan arpapeliä</h2>
                         <Grid style={{justifyContent: 'center', textAlign: 'center'}}>
-                            <p style={{
-                                color: theme.palette.secondary.main,
-                                alignItems: 'center',
-                                fontSize: 16,
-                                display: "inline",
-                                fontFamily: 'Robato',
-                                textTransform: 'uppercase'
-                            }}>Saldo:</p>
-                            <p style={{
-                                color: theme.palette.secondary.main,
-                                alignItems: 'center',
-                                fontSize: 28,
-                                display: "inline",
-                                fontFamily: 'Robato'
-                            }}>{ownPoints} €</p>
+                            <p className={classes.startingPointResult} style={{fontSize: 16}}>Saldo:</p>
+                            <p className={classes.startingPointResult} style={{fontSize: 28}}>{ownPoints} €</p>
                         </Grid>
                     </div>
 
